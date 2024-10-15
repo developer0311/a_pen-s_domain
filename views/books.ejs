@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+
+<section>
+    <div class="about-heading">
+        <img src="images/logo1.png" alt="">
+        <h3>Stories We Have Written</h3>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row book-contents">
+            <% books.forEach(element => { %>
+                <div class="col-sm-12 col-lg-6 book-card">
+                    <div class="book-cover">
+                        <img src="images/book.png" alt="Book's image">
+                    </div>
+                    <div class="book-about">
+                        <div class="about-text">
+                            <p><%= element.title %></p>
+                            <p><span>Writer: </span><%= element.author_name %></p>
+                            <p><span>Publish Date: </span><%= element.publish_date.toISOString().split("T")[0] %></p>
+                        </div>
+                        <a href="/specific?id=<%= element.id %>" class="my-btn">View More</a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

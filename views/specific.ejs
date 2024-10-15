@@ -1,0 +1,161 @@
+<%- include('partials/header') %>
+
+
+    <section class="specific-book">
+        <div class="book-image">
+            <div class="detail-image">
+                <img src="images/book.png" alt="">
+            </div>
+        </div>
+
+        <div class="book-details">
+            <div class="book-name">
+                <h3>
+                    <%= book.title %>: <span class="subtitle">
+                            <%= book.subtitle %>
+                        </span>
+                </h3>
+            </div>
+
+            <div class="book-more-details">
+                <ul>
+                    <li>
+                        <%= book.description %>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="l-c-s-d">
+                <div class="l-c-s-d-option">
+                    <a href="/like?id=<%= book.id %>">
+                        <i class='bx <%= userLiked ? "bxs-like" : "bx-like" %>'
+                            title="<%= userLiked ? 'Unlike' : 'Like' %>"></i>
+                        <span>
+                            <%= book.likes %>
+                        </span>
+                    </a>
+                </div>
+                <div class="l-c-s-d-option">
+                    <i class='bx bx-message-rounded-dots' title="Comment"></i>
+                    <span>
+                        <%= commentArray.length %>
+                    </span>
+                </div>
+
+                <div class="l-c-s-d-option">
+                    <a href="#" id="share" data-id="<%= book.id %>">
+                        <i class='bx bx-share' title="Share"></i>
+                    </a>
+                    <span id="share-count">
+                        <%= book.shares %>
+                    </span>
+
+                </div>
+                <div class="l-c-s-d-option">
+                    <a href="#" id="download-link" data-pdf="<%= book.pdf_name %>" data-id="<%= book.id %>">
+                        <i class='bx bxs-download' title="Download"></i>
+                    </a>
+                    <span id="download-count"><%= book.downloads %></span>
+                    
+                </div>
+            </div>
+
+            <!-- Comment Section (Hidden by Default) -->
+            <div class="comment-section" style="display:none;">
+                <form action="/comment" method="POST">
+                    <input type="hidden" name="bookId" value="<%= book.id %>" />
+                    <input type="text" name="comment" class="comment-input" placeholder="Write a comment..." required />
+                    <button type="submit" class="submit-comment"><i class='bx bxs-send'
+                            style='color:#ffffff'></i></button>
+                </form>
+
+                <!-- Scrollable Comment List -->
+                <div class="comments-list">
+                    <ul class="user-comments">
+                        <% commentArray.forEach(comment=> { %>
+                            <li class="user-comment"><i class='bx bxs-bullseye'></i>
+                                <%= comment %>
+                            </li>
+                            <% }) %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Your event listener code here
+        document.getElementById('share').addEventListener('click', async function (event) {
+            event.preventDefault(); // Prevent the default anchor behavior
+
+            const bookId = this.getAttribute('data-id'); // Get the book ID from the data attribute
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Check out this book!',
+                        text: 'Here is a great book I found.',
+                        url: window.location.href, // Current page URL with book ID
+                    });
+                    
+                    // Make a POST request to update share count
+                    const response = await fetch(`/share?id=${bookId}`, { method: 'POST' });
+                    if (!response.ok) throw new Error('Failed to update share count');
+
+                    // Parse the JSON response
+                    const updatedData = await response.json();
+                    console.log(updatedData); // Log to check the response structure
+
+                    // Update the UI to reflect the new share count
+                    const shareCountElement = document.getElementById('share-count');
+                    if (shareCountElement) { // Check if the element exists
+                        shareCountElement.innerText = updatedData.updatedShareCount; // Update the share count display
+                    } else {
+                        console.error('Share count element not found');
+                    }
+                } catch (error) {
+                    console.error('Error sharing:', error);
+                }
+            } else {
+                alert('Sharing is not supported in this browser.');
+            }
+        });
+    });
+
+
+
+
+        document.getElementById('download-link').addEventListener('click', async function (event) {
+            event.preventDefault(); // Prevent default link behavior
+
+            const pdfName = this.getAttribute('data-pdf');
+            const bookId = this.getAttribute('data-id');
+
+            // Fetch to update the download count
+            try {
+                const response = await fetch(`/update-downloads?bookId=${bookId}&pdf_link=public/images/pdfs/${pdfName}`, {
+                    method: 'POST'
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update download count');
+                }
+
+                // Update the count in the UI
+                let downloadCount = document.querySelector("#download-count");
+                let countValue = parseInt(downloadCount.innerHTML, 10); // Get the current count
+                downloadCount.innerHTML = countValue + 1; // Increment and update the UI
+
+                // Redirect to the download link after updating
+                window.location.href = `/download?pdf_link=public/images/pdfs/${pdfName}&bookId=${bookId}`;
+            } catch (error) {
+                console.error('Error updating download count:', error);
+            }
+        });
+
+    </script>
+
+
+
+    <%- include('partials/footer') %>

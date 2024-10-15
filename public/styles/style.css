@@ -1,0 +1,501 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sanchez:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=New+Amsterdam&family=Sanchez:ital@0;1&family=Sansita+Swashed:wght@300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Sanchez:ital@0;1&family=Sofadi+One&display=swap');
+
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    overflow-x: hidden;
+    background-color: var(--body-bg-color);
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+:root {
+    /* Body background and text color */
+    --body-bg-color: #1e1e2e;      /* Dark background to evoke space or otherworldly feel */
+    --body-text-color: #e0e0e0;    /* Light text for contrast against dark background */
+
+    /* Headings */
+    --h1-color: #ff6f61;           /* Vibrant color for main titles, evoking energy and adventure */
+    --h3-color: #ffa500;           /* Secondary heading with a warm, striking tone */
+
+    /* Paragraph */
+    --p-color: #cccccc;            /* Soft light gray for readability on dark background */
+
+    /* Span */
+    --span-color: #5cdb95;       /* Bright, futuristic green for links */
+    --span-hover-color: #379683;
+
+
+    /* Anchor (links) */
+    --anchor-color: #5cdb95;       /* Bright, futuristic green for links */
+    --anchor-hover-color: #379683; /* Darker green for hover effect */
+
+    /* Buttons */
+    --button-bg-color: #ff6f61;    /* Bold red for buttons to grab attention */
+    --button-text-color: #ffffff;  /* White text for readability */
+    --button-hover-bg-color: #c0392b; /* Darker red for hover */
+    --button-shadow: 0 4px 8px rgba(221, 127, 50, 0.979);
+
+    /* Navigation Bar */
+    --nav-bg-color: #2a2a4a;       /* Dark purple for a subtle but unique nav */
+    --nav-text-color: #e0e0e0;     /* Light text in the navigation bar */
+    --nav-hover-color: #ff6f61;
+
+    /* Footer */
+    --footer-bg-color: #2a2a4a;    /* Darker tone for the footer, blending with body */
+    --footer-text-color: #b3b3cc;  /* Lighter gray for footer text */
+}
+
+
+/* -------------------------------- BASICS -------------------------------- */
+
+h1, .brand-name{
+    font-size: 3rem;
+    font-family: "Montserrat Alternates", sans-serif;
+    color: var(--h1-color);
+}
+
+h3{
+    font-size: 1.5rem;
+    font-family: "Montserrat Alternates", sans-serif;
+    /* font-family: "Bebas Neue", sans-serif; */
+    color: var(--h3-color);
+}
+
+p,
+a,
+li,
+label,
+input,
+textarea{
+    font-family: "Sanchez", serif;
+    text-decoration: none;
+    color: var(--p-color);
+}
+
+
+span{
+    font-family: "Sanchez", serif;
+    color: var(--span-color);
+}
+
+input{
+    color: var(--h1-color);
+}
+
+.my-active{
+    color: var(--nav-hover-color);
+}
+
+main{
+    min-height: calc(100vh - 60px - 67px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 1s ease-out;
+}
+
+section{
+    width: 90vw;
+    margin: 0px auto 25px auto;
+}
+
+.my-btn {
+    color: var(--button-text-color);
+    background-color: var(--button-bg-color);
+    padding: 6px 12px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 5px 1px rgb(255, 87, 72);
+    transition: all 0.2s ease-in-out;
+    font-size: 12px;
+}
+
+.my-btn:hover{
+    background-color: var(--button-hover-bg-color);
+    box-shadow: 0px 0px 5px 0px rgb(248, 66, 50);
+}
+
+
+
+
+/*-------------------------- HEADER --------------------------*/
+
+.navbar{
+    padding: 10px 4vw;
+    background-color: var(--body-bg-color);
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand{
+    color: var(--nav-text-color);
+}
+
+.navbar .my-active{
+    color: var(--nav-hover-color);
+}
+
+.navbar .nav-link:hover{
+    color: var(--nav-hover-color);
+}
+.navbar i{
+    margin-right: 5px;
+}
+
+.navbar .navbar-toggler{
+    color: var(--nav-text-color);
+}
+
+.navbar .bx-menu{
+    font-size: 25px;
+    margin: 0;
+}
+
+
+/*-------------------------- FOOTER --------------------------*/
+
+.custom-footer{
+    border-top: 1px solid var(--footer-text-color) !important;
+    color: var(--footer-text-color);
+}
+
+footer span{
+    margin-bottom: 30px;
+    color: var(--footer-text-color);
+}
+
+footer i{
+    font-size: 30px;
+}
+
+
+/* -------------------------------- INDEX>ejs -------------------------------- */
+
+.home-content,
+.about-content{
+    /* min-height: calc(100vh - 60px - 80px); */
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.content-box{
+    padding: 20px 10vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.content-box .text-content{
+    width: 45vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.content-box .text-content img{
+    margin-bottom: 30px;
+}
+
+.content-box .text-content p{
+    padding: 0px 10vw 0px 0px;
+}
+
+.content-box .image-content{
+    width: 35vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-box .image-content img{
+    width: 25vw;
+}
+
+
+/* -------------------------------- BOOK -------------------------------- */
+
+
+.about-heading{
+    padding: 50px 0px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-heading img{
+    width: 25%;
+    margin-bottom: 30px;
+}
+
+.about-heading h1,
+.about-heading h3{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.book-contents {
+    padding: 0px 2%;
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: flex-start; 
+}
+
+.book-contents .book-card {
+    display: flex;
+    width: 48%; 
+    margin-bottom: 50px;
+    justify-content: flex-start;
+}
+
+.book-contents .book-card .book-cover {
+    width: 100px;
+    height: 140px;
+}
+
+.book-contents .book-card .book-cover img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+.book-contents .book-card .book-about {
+    width: calc(100% - 100px); 
+    height: 100%;
+    padding-left: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.book-contents .book-card .book-about .about-text{
+
+    margin-bottom: 20px;
+}
+.book-contents .book-card .book-about p {
+    margin-bottom: 1px;
+    width: 100%;
+    overflow-wrap: break-word; 
+    word-break: break-word;
+}
+
+
+
+
+/* -------------------------------- SPECIFIC.ejs -------------------------------- */
+
+.specific-book{
+    min-height: calc((100vh - 70px - 97px - 200px));
+    display: flex;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+.specific-book .book-image{
+    padding: 50px 20px;
+    width: 40%;
+    margin-right: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.specific-book .book-image .detail-image{
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.specific-book .book-image img{
+    width: 60%;
+}
+
+.specific-book .book-details{
+    width: 60%;
+    padding: 0px 40px;
+}
+
+.specific-book .book-details .book-name h3{
+    font-size: 25px;
+}
+
+.specific-book .book-details .book-name .subtitle{
+    font-size: 20px;
+    color: var(--nav-hover-color);
+}
+
+.specific-book .price-details .special{
+    color: rgb(5, 189, 5);
+    font-weight: bolder;
+}
+
+
+
+.specific-book .book-details .book-more-details ul{
+    padding: 0;
+}
+.specific-book .book-details .book-more-details ul li{
+    list-style: none;
+    color: var(--body-text-color);
+}
+
+.l-c-s-d{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.l-c-s-d .l-c-s-d-option{
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.l-c-s-d .l-c-s-d-option a{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.l-c-s-d .l-c-s-d-option i{
+    cursor: pointer;
+    font-size: 20px;
+    color: #ff6f61;
+}
+
+.l-c-s-d .l-c-s-d-option span{
+    font-size: 10px;
+}
+
+.comment-section{
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+}
+
+.comment-section .comment-input{
+    margin-right: 10px;
+    padding: 2px 10px;
+    border-radius: 5px;
+}
+
+.comment-section .submit-comment{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #ff6f61;
+    font-size: 15px;
+    outline: 0px;
+    border: 0px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.comment-section .submit-comment:hover{
+    background-color: #ff5849;
+}
+
+.user-comments{
+    padding: 5px 2px;
+}
+
+.user-comments .user-comment{
+    list-style: none;
+    color: var(--body-text-color);
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.comment-section form{
+    margin-bottom: 20px;
+}
+
+.comment-section {
+    width: 100%;
+}
+
+.comment-section .comments-list {
+    max-height: 150px; /* Show only 10 lines */
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Beautiful Scrollbar */
+.comment-section .comments-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.comment-section .comments-list::-webkit-scrollbar-thumb {
+    background-color: #ff6f61;
+    border-radius: 10px;
+}
+
+.comment-section .comments-list::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+.user-comments .user-comment {
+    list-style: none;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.user-comments .user-comment i{
+    color: var(--span-color);
+}
+
+
+/*-------------------------- LOGIN.ejs & REGISTER.ejs --------------------------*/
+
+.l-g-form{
+    margin-bottom: 20px;
+}
+
+.form-group{
+    margin-bottom: 10px;
+}
+
+.form-group label{
+    color: var(--nav-bg-color);
+}
+
+.register-btn{
+    margin-right: 5px;
+}
+
+.card-body img{
+    width: 25px;
+    margin-right: 10px;
+}
+
+.lr{
+    margin-bottom: 20px;
+}

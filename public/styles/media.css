@@ -1,0 +1,195 @@
+
+
+/*========================== < 1380px ==========================*/
+
+@media only screen and (max-width: 1380px){
+
+    /*-------------------------- SPECIFIC.ejs --------------------------*/
+
+    .specific-book{
+        min-height: calc((100vh - 70px - 97px));
+        margin-top: 0px;
+        margin-bottom: 30px;
+        flex-direction: column;
+    }
+    
+    .specific-book .book-image{
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .specific-book .book-image img{
+        width: 25%;
+    }
+    
+    .specific-book .book-image .deal-option a{
+        width: 170px;
+    }
+    
+    .specific-book .book-details{
+        width: 100%;
+        padding: 0px 40px;
+    }
+    
+    .specific-book .book-details .book-more-details ul {
+        margin-bottom: 40px;
+    }
+}
+
+
+
+/*========================== < 992px ==========================*/
+
+@media only screen and (max-width: 992px) {
+
+    /*-------------------- INDEX.ejs --------------------*/
+
+    .content-box{
+        font-size: 12px;
+        padding: 20px 5vw;
+        flex-direction: column;
+    }
+
+    .content-box .text-content{
+        justify-content: center;
+        align-items: center;
+    }
+
+    .content-box .text-content{
+        width: 100%;
+    }
+
+    .content-box .text-content img{
+        width: 40%;
+    }
+
+    .content-box .image-content{
+        width: 100%;
+
+    }
+
+    .content-box .image-content img{
+        width: 70%;
+    }
+
+    .content-box .text-content p{
+        padding: 0px 5px;
+    }
+    
+
+
+    /*-------------------- BOOKS.ejs --------------------*/
+    .about-heading img{
+        width: 160px;
+        margin-bottom: 30px;
+    }
+
+    .book-contents .book-card {
+        width: 100%;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+
+
+/*========================== < 650px ==========================*/
+
+@media only screen and (max-width: 650px){
+    
+    /*-------------------------- BASIC --------------------------*/
+
+    section{
+        width: 99vw;
+    }
+
+
+    /*-------------------------- FOOTER --------------------------*/
+
+    .custom-footer{
+        border-top: 1px solid var(--footer-text-color) !important;
+    }
+    
+    footer span{
+        font-size: 12px;
+        margin-bottom: 0px;
+    }
+    footer i{
+        font-size: 12px;
+    }
+
+    
+    /*-------------------------- HOME.ejs --------------------------*/
+
+    .lead{
+        font-size: 15px;
+    }
+
+
+    /*-------------------------- SPECIFIC.ejs --------------------------*/
+
+    .specific-book .book-image .deal-option a{
+        font-size: 15px;
+        width: 130px;
+        margin: 0px 10px;
+        padding: 7px 14px;
+    }
+
+    .specific-book .book-details .book-more-details ul li {
+        font-size: 12px;
+    }
+
+    .comment-section form{
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+
+    .comment-section form .submit-comment{
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+    }
+
+    .user-comments .user-comment {
+        font-size: 12px;
+        margin-bottom: 3px;
+    }
+
+    
+}
+
+
+/*========================== < 435px ==========================*/
+
+@media only screen and (max-width: 435px){
+    .specific-book{
+        padding: 0px 5px;
+    }
+
+    .specific-book .book-image img{
+        width: 35%;
+    }
+
+    .specific-book .book-image .deal-option{
+        flex-direction: column;
+    }
+
+    .specific-book .book-image .deal-option a{
+        width: 100% ;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .specific-book .book-details{
+        width: 95%;
+        padding: 0px 5px;
+    }
+
+    .register-btn,
+    .login-btn{
+        font-size: 15px;
+    }
+
+    
+}
