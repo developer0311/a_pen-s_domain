@@ -8,6 +8,7 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import GoogleStrategy from "passport-google-oauth2";
 import session from "express-session";
+import flash from 'express-flash';
 import "dotenv/config";
 import path from "path";
 
@@ -26,6 +27,7 @@ app.use(
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -424,11 +426,26 @@ app.get("/login", (req, res) => {
 
 app.post(
   "/login",
-  passport.authenticate("local", {
-    successRedirect: "/home",
-    failureRedirect: "/login",
-  })
+  (req, res, next) => {
+    passport.authenticate("local", (err, user, info) => {
+      if (err) {
+        return next(err); // Handle error
+      }
+      if (!user) {
+        // If the user is not found, flash the error and redirect to register
+        req.flash("error", info.message || "User not found, please register.");
+        return res.redirect("/register");
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          return next(err); // Handle error
+        }
+        return res.redirect("/home"); // Successful login
+      });
+    })(req, res, next); // Call passport.authenticate with req, res, next
+  }
 );
+
 
 //-------------------------- REGISTER Route --------------------------//
 
@@ -519,7 +536,9 @@ passport.use(
           }
         });
       } else {
-        return cb("User not found");
+        // return cb("User not found");
+        // res.redirect("/register");
+        return cb(null, false, { message: "User not found. Redirecting to register." });
       }
     } catch (err) {
       console.log(err);
@@ -533,7 +552,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/home",
+      callbackURL: "https://a-pen-s-domain.onrender.com/auth/google/home",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     },
     async (accessToken, refreshToken, profile, cb) => {
