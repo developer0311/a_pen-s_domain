@@ -432,19 +432,19 @@ app.post(
         return next(err); // Handle error
       }
       if (!user) {
-        req.flash("error", info.message || "User not found, please register."); // Use info.message
-        return res.redirect("/login"); // Redirect to login if no user found
+        // If the user is not found, flash the error and redirect to register
+        req.flash("error", info.message || "User not found, please register.");
+        return res.redirect("/register");
       }
       req.logIn(user, (err) => {
         if (err) {
-          return next(err); // Handle login error
+          return next(err); // Handle error
         }
-        return res.redirect("/home"); // Redirect to home if successful
+        return res.redirect("/home"); // Successful login
       });
-    })(req, res, next); // Call the authenticate function
+    })(req, res, next); // Call passport.authenticate with req, res, next
   }
 );
-
 
 
 //-------------------------- REGISTER Route --------------------------//
@@ -517,7 +517,9 @@ passport.use(
   "local",
   new Strategy(async function verify(username, password, cb) {
     try {
-      const result = await db.query("SELECT * FROM users WHERE email = $1", [username]);
+      const result = await db.query("SELECT * FROM users WHERE email = $1 ", [
+        username,
+      ]);
       if (result.rows.length > 0) {
         const user = result.rows[0];
         const storedHashedPassword = user.password;
@@ -525,23 +527,24 @@ passport.use(
           if (err) {
             console.error("Error comparing passwords:", err);
             return cb(err);
-          } 
-          if (valid) {
-            return cb(null, user);
           } else {
-            return cb(null, false, { message: "Invalid password." }); // Set message here
+            if (valid) {
+              return cb(null, user);
+            } else {
+              return cb(null, false);
+            }
           }
         });
       } else {
-        return cb(null, false, { message: "User not found, please register." }); // Set message for user not found
+        // return cb("User not found");
+        // res.redirect("/register");
+        return cb(null, false, { message: "User not found. Redirecting to register." });
       }
     } catch (err) {
-      console.error(err);
-      return cb(err);
+      console.log(err);
     }
   })
 );
-
 
 passport.use(
   "google",
