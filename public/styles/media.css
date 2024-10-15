@@ -43,6 +43,16 @@
 @media only screen and (max-width: 992px) {
 
     /*-------------------- INDEX.ejs --------------------*/
+    footer span{
+        font-size: 12px;
+    }
+
+
+    /*-------------------- INDEX.ejs --------------------*/
+    
+    main{
+        min-height: calc(100vh - 60px - 67px);
+    }
 
     .content-box{
         font-size: 12px;
@@ -69,7 +79,7 @@
     }
 
     .content-box .image-content img{
-        width: 70%;
+        width: 45%;
     }
 
     .content-box .text-content p{

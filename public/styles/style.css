@@ -172,7 +172,7 @@ section{
 }
 
 footer span{
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
     color: var(--footer-text-color);
 }
 
