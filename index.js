@@ -67,6 +67,9 @@ let active_page = (pageName) => {
 //-------------------------- INDEX Routes --------------------------//
 
 app.get("/", (req, res) => {
+  if (req.isAuthenticated()){
+    return res.redirect("/home");
+  }
   const username = req.isAuthenticated()
     ? get_username(req.user.email)
     : "Guest";
