@@ -435,9 +435,9 @@ app.post(
         return next(err); // Handle error
       }
       if (!user) {
-        // If the user is not found, flash the error and redirect to register
+        // If the user is not found or password is incorrect, flash the error and redirect to login
         req.flash("error", info.message || "User not found, please register.");
-        return res.redirect("/register");
+        return res.redirect("/login"); // Redirect back to the login page
       }
       req.logIn(user, (err) => {
         if (err) {
@@ -448,6 +448,7 @@ app.post(
     })(req, res, next); // Call passport.authenticate with req, res, next
   }
 );
+
 
 
 //-------------------------- REGISTER Route --------------------------//
@@ -520,34 +521,28 @@ passport.use(
   "local",
   new Strategy(async function verify(username, password, cb) {
     try {
-      const result = await db.query("SELECT * FROM users WHERE email = $1 ", [
-        username,
-      ]);
+      const result = await db.query("SELECT * FROM users WHERE email = $1", [username]);
       if (result.rows.length > 0) {
         const user = result.rows[0];
         const storedHashedPassword = user.password;
-        bcrypt.compare(password, storedHashedPassword, (err, valid) => {
-          if (err) {
-            console.error("Error comparing passwords:", err);
-            return cb(err);
-          } else {
-            if (valid) {
-              return cb(null, user);
-            } else {
-              return cb(null, false);
-            }
-          }
-        });
+        
+        // Use promise with bcrypt.compare for better error handling
+        const valid = await bcrypt.compare(password, storedHashedPassword);
+        if (valid) {
+          return cb(null, user);
+        } else {
+          return cb(null, false, { message: "Invalid password. Please try again." });
+        }
       } else {
-        // return cb("User not found");
-        // res.redirect("/register");
-        return cb(null, false, { message: "User not found. Redirecting to register." });
+        return cb(null, false, { message: "User not found. Please register." });
       }
     } catch (err) {
       console.log(err);
+      return cb(err); // Handle unexpected errors
     }
   })
 );
+
 
 passport.use(
   "google",
@@ -555,7 +550,8 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://a-pen-s-domain.onrender.com/auth/google/home",
+      // callbackURL: "https://a-pen-s-domain.onrender.com/auth/google/home",
+      callbackURL: "http://localhost:3000/auth/google/home",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     },
     async (accessToken, refreshToken, profile, cb) => {
